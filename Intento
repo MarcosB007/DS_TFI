@@ -1,0 +1,139 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión - Ingenio La Trinidad</title>
+    <link rel="manifest" href="/manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-image: url('https://ceiinc.co/wp-content/uploads/2022/11/Ingenio-azucarero-ceiinc-evaporadores.jpg'); 
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+            backdrop-filter: blur(3px);
+        }
+
+        .login-container {
+            background-color: rgba(0, 123, 62, 0.9); /* Verde suave con transparencia */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 320px;
+            text-align: center;
+            color: #fff; /* Texto blanco para contraste */
+        }
+
+        h1 {
+            margin-bottom: 25px;
+            font-size: 26px;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: 600;
+            color: #e0e0e0; /* Texto gris claro */
+        }
+
+        input {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        /* Botón de inicio de sesión resaltado */
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745; /* Verde brillante */
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 18px; /* Tamaño más grande para resaltar */
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para que resalte */
+            transition: background 0.3s ease, transform 0.2s ease; /* Transición suave */
+        }
+
+        /* Efecto hover para resaltar aún más */
+        button:hover {
+            background-color: #218838; /* Verde más oscuro al pasar el cursor */
+            transform: translateY(-3px); /* Efecto de levantamiento al hacer hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Más sombra al hacer hover */
+        }
+
+        .error-message {
+            color: #c80909; /* Texto rojo claro para los errores */
+            margin-top: 30px;
+            font-weight: bold; /* Negrita */
+            font-size: 18px; /* Aumenta el tamaño del texto */
+            background-color: #fdd; /* Fondo rojo claro */
+            padding: 10px; /* Espacio alrededor del texto */
+            border: 2px solid #c80909; /* Borde del mismo color rojo */
+            border-radius: 5px; /* Bordes redondeados */
+        }
+
+        .logo {
+            margin-bottom: 25px;
+        }
+
+        .logo img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%; /* Hace el logo redondo */
+            border: 4px solid #fff; /* Borde blanco para camuflar con el fondo */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img src="logo.jpeg" alt="Ingenio La Trinidad"> 
+        </div>
+        <h1>Inicio de Sesión</h1>
+        <form id="login-form">
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+        <div id="error-message" class="error-message"></div>
+    </div>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('error-message');
+
+            if (username === 'admin' && password === '1234') {
+                window.location.href = 'sesion.html';
+            } else {
+                errorMessage.textContent = 'Usuario o contraseña incorrectos';
+            }
+        });
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(() => {
+                console.log('Service Worker registrado');
+            });
+        }
+    </script>
+</body>
+</html>
