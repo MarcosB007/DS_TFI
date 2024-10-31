@@ -4,17 +4,15 @@
  */
 package tfids;
 
-/**
- *
- * @author marco
- */
+import java.awt.EventQueue;
+
 public class TFIDS {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new login(); // Crea una instancia de LoginFrame
+            }
+        });
     }
-    
 }
