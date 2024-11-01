@@ -4,6 +4,7 @@
  */
 package tfids;
 
+import ventanas.login;
 import java.awt.EventQueue;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
@@ -14,7 +15,8 @@ public class TFIDS {
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new login(); // Crea una instancia de LoginFrame
+                login ventanaLogin = new login(); // Crea una instancia de LoginFrame
+                ventanaLogin.setVisible(true);
                 try {
                     conexionDB.conectar();
                     
