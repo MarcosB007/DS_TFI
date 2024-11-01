@@ -16,7 +16,10 @@ import java.sql.*;
  */
 public class conexionDB {
     
+    private static conexionDB instance;
+    
     public static Connection conectar() throws FileNotFoundException{
+        
         Properties properties = new Properties();
         Connection conexion = null;
         try{
