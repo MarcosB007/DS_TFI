@@ -5,6 +5,9 @@
 package tfids;
 
 import java.awt.EventQueue;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TFIDS {
 
@@ -12,6 +15,12 @@ public class TFIDS {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new login(); // Crea una instancia de LoginFrame
+                try {
+                    conexionDB.conectar();
+                    
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(TFIDS.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
