@@ -25,7 +25,7 @@ public class conexionDB {
             String user= properties.getProperty("db.user");
             String password= properties.getProperty("db.password");
             conexion = DriverManager.getConnection(url,user,password);
-            //"jdbc:mysql://localhost:3309/dbds","root","123456789"
+            
             System.out.println("Conexion exitosa");
             
         }catch(SQLException e){
