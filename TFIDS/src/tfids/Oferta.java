@@ -20,7 +20,7 @@ public class Oferta extends JFrame {
     private JTextArea ofrecimientosField;
 
     public Oferta() {
-        setTitle("Publicar Nueva Oferta de Trabajo");
+        setTitle("Contratación Ingenio - Publicar Nueva Oferta de Trabajo");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -28,20 +28,22 @@ public class Oferta extends JFrame {
 
         // Encabezado
         JPanel headerPanel = new JPanel();
-        headerPanel.setBackground(new Color(0, 123, 62));
+        headerPanel.setBackground(new Color(0, 80, 50));
         JLabel headerLabel = new JLabel("Publicar Nueva Oferta de Trabajo");
         headerLabel.setForeground(Color.WHITE);
-        headerLabel.setFont(new Font("Arial", Font.BOLD, 26));
+        headerLabel.setFont(new Font("Sans-Serif", Font.BOLD, 28));
         headerPanel.add(headerLabel);
 
         // Panel del formulario
-        JPanel formPanel = new JPanel();
-        formPanel.setLayout(new GridBagLayout());
-        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        formPanel.setBackground(Color.LIGHT_GRAY); // Fondo claro
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        formPanel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createEmptyBorder(20, 20, 20, 20), 
+            BorderFactory.createTitledBorder("Detalles de la Oferta")
+        ));
+        formPanel.setBackground(new Color(240, 240, 240));
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(15, 10, 15, 10); // Espaciado aumentado
+        gbc.insets = new Insets(12, 10, 12, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Campo "Puesto"
@@ -83,30 +85,31 @@ public class Oferta extends JFrame {
         formPanel.add(new JScrollPane(ofrecimientosField), gbc);
 
         // Panel de botones
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         JButton publicarButton = new JButton("Publicar Oferta");
-        publicarButton.setBackground(new Color(0, 128, 0));
+        publicarButton.setBackground(new Color(0, 123, 62));
         publicarButton.setForeground(Color.WHITE);
-        publicarButton.setFont(new Font("Arial", Font.PLAIN, 14));
-        publicarButton.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Bordes
-
+        publicarButton.setFont(new Font("Sans-Serif", Font.BOLD, 14));
+        publicarButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        publicarButton.setMnemonic('P');
+        
         JButton volverButton = new JButton("Volver al menú");
-        volverButton.setBackground(new Color(0, 128, 0));
+        volverButton.setBackground(new Color(0, 123, 62));
         volverButton.setForeground(Color.WHITE);
-        volverButton.setFont(new Font("Arial", Font.PLAIN, 14));
-        volverButton.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Bordes
+        volverButton.setFont(new Font("Sans-Serif", Font.BOLD, 14));
+        volverButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        volverButton.setMnemonic('V');
 
         // Acción al hacer clic en "Publicar Oferta"
         publicarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (validarCampos()) {
-                    JOptionPane.showMessageDialog(Oferta.this, "Oferta de trabajo publicada.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                    // Aquí podrías agregar la lógica para guardar la oferta en la base de datos o similar.
+                    JOptionPane.showMessageDialog(Oferta.this, "Oferta de trabajo publicada exitosamente.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+                    // Lógica para guardar la oferta
                 } else {
-                    JOptionPane.showMessageDialog(Oferta.this, "Completa todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(Oferta.this, "Por favor, complete todos los campos antes de continuar.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
@@ -115,7 +118,7 @@ public class Oferta extends JFrame {
         volverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose(); // Cierra la ventana actual
+                dispose();
             }
         });
 
@@ -136,6 +139,5 @@ public class Oferta extends JFrame {
                 && !requisitosField.getText().trim().isEmpty()
                 && !ofrecimientosField.getText().trim().isEmpty();
     }
-
 }
 
