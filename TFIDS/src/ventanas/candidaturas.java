@@ -41,7 +41,7 @@ public class candidaturas extends JFrame {
         JPanel encabezadoPanel = new JPanel(new BorderLayout());
         encabezadoPanel.setBackground(new Color(0, 123, 62)); // Color sobrio para el encabezado
 
-        JLabel tituloLabel = new JLabel("Sistema de Gestión de Candidaturas", JLabel.CENTER);
+        JLabel tituloLabel = new JLabel("Contratación RRHH - Ingenio La Trinidad", JLabel.CENTER);
         tituloLabel.setFont(new Font("Serif", Font.BOLD, 24));
         tituloLabel.setForeground(Color.WHITE);
         encabezadoPanel.add(tituloLabel, BorderLayout.CENTER);
