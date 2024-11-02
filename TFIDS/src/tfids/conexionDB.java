@@ -14,14 +14,15 @@ import java.sql.*;
  *
  * @author marco
  */
-public class conexionDB {
+public class ConexionDB {
     
-    private static conexionDB instance;
+    private static ConexionDB instance;
+    private Connection conexion = null;
     
-    public static Connection conectar() throws FileNotFoundException{
+    public  ConexionDB() throws FileNotFoundException{
         
         Properties properties = new Properties();
-        Connection conexion = null;
+        
         try{
             properties.load(new FileInputStream("../config.properties"));
             String url= properties.getProperty("db.url");
@@ -37,6 +38,18 @@ public class conexionDB {
         } catch (IOException ex) {
             System.out.println("Error al cargar el archivo de credenciales " + ex.getMessage());
         }
+    }
+    
+    public static ConexionDB getInstance() throws SQLException, FileNotFoundException{
+        if(instance == null){
+            instance = new ConexionDB();
+        }else if(instance.getConexion().isClosed()){
+            instance = new ConexionDB();
+        }
+        return instance;
+    }
+    
+    public Connection getConexion(){
         return conexion;
     }
 }

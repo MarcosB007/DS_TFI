@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package ventanas;
+import tfids.*;
 
 /**
  *
@@ -12,6 +13,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class login extends JFrame {
 
@@ -102,13 +106,22 @@ public class login extends JFrame {
         loginButton.addActionListener(e -> {
             String username= userField.getText();
             String password = new String(passField.getPassword());
-
-            // Verificar credenciales (ajusta según tu lógica de autenticación)
-            if (username.equals("admin") && password.equals("1234")) {
+            
+            DAO dao = new DAO();
+            
+            try {      
+                var resultado = dao.validarUsuario(username, password);
+                System.out.println(resultado);
+                // Verificar credenciales (ajusta según tu lógica de autenticación)
+                if (resultado) {
+                    
                 dispose(); // Cierra la ventana de inicio de sesión
                 new panelPrincipal(); // Abre la ventana principal
-            } else {
-                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.");
+                } else {
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
+                }
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
         
