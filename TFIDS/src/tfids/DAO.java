@@ -4,7 +4,6 @@
  */
 package tfids;
 
-import com.mysql.cj.xdevapi.PreparableStatement;
 import com.sun.jdi.connect.spi.Connection;
 import java.io.FileNotFoundException;
 import java.sql.DriverManager;
