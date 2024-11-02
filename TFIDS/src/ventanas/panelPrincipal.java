@@ -78,6 +78,14 @@ public class panelPrincipal extends JFrame {
                     }
                 });
             }
+            if (text.equals("Candidaturas")) {
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        new candidaturas().setVisible(true); // Abre la ventana PublicarOferta
+                    }
+                });
+            }
 
             buttonPanel.add(button);
         }

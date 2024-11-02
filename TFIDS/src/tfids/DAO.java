@@ -21,7 +21,7 @@ public class DAO {
          
         try{
             
-            java.sql.Connection con = ConexionDB.getInstance().getConexion();
+            java.sql.Connection con = conexionDB.getInstance().getConexion();
             String query = "SELECT * FROM usuario WHERE user=? and password=?";
             PreparedStatement sql = con.prepareStatement(query);
             sql.setString(1, user);

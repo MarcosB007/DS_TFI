@@ -19,7 +19,7 @@ public class TFIDS {
                 login ventanaLogin = new login(); // Crea una instancia de LoginFrame
                 ventanaLogin.setVisible(true);
                try {
-                    ConexionDB.getInstance();
+                    conexionDB.getInstance();
                     
                 } catch (FileNotFoundException | SQLException ex) {
                     Logger.getLogger(TFIDS.class.getName()).log(Level.SEVERE, null, ex);

@@ -14,12 +14,12 @@ import java.sql.*;
  *
  * @author marco
  */
-public class ConexionDB {
+public class conexionDB {
     
-    private static ConexionDB instance;
+    private static conexionDB instance;
     private Connection conexion = null;
     
-    public  ConexionDB() throws FileNotFoundException{
+    public  conexionDB() throws FileNotFoundException{
         
         Properties properties = new Properties();
         
@@ -40,11 +40,11 @@ public class ConexionDB {
         }
     }
     
-    public static ConexionDB getInstance() throws SQLException, FileNotFoundException{
+    public static conexionDB getInstance() throws SQLException, FileNotFoundException{
         if(instance == null){
-            instance = new ConexionDB();
+            instance = new conexionDB();
         }else if(instance.getConexion().isClosed()){
-            instance = new ConexionDB();
+            instance = new conexionDB();
         }
         return instance;
     }
