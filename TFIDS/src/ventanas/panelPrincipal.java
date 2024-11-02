@@ -70,18 +70,25 @@ public class panelPrincipal extends JFrame {
             buttonPanel.add(button);
             
             // Agregar ActionListener solo para el botón "Publicar Oferta de Trabajo"
+            // Agregar ActionListener para los botones específicos
             if (text.equals("Publicar Oferta de Trabajo")) {
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        new Oferta(); // Abre la ventana PublicarOferta
+                        new Oferta().setVisible(true); // Abre la ventana PublicarOferta
                     }
                 });
-            }
-
+            } else if (text.equals("Candidaturas")) {
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                       new candidaturas().setVisible(true);// Abre la ventana CandidaturasApp
+                    }   
+                });
+                }
+                        
             buttonPanel.add(button);
         }
-        
          
 
         // Añadir el panel de botones al centro con espaciado alrededor
