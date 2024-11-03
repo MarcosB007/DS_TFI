@@ -45,9 +45,8 @@ public class DAO {
         
         try{
             java.sql.Connection con = conexionDB.getInstance().getConexion();
-            String query = "SELECT * FORM postulaciones";
-            //SELECT nombreApellido, puesto FROM candidato, oferta_trabajo, postulaciones where"
-                    //+ "dni_candidato = CANDIDATO_dni_candidato and OFERTA_TRABAJO_id_oferta = id_oferta
+            String query = ("SELECT nombreApellido, puesto FROM candidato, oferta_trabajo, postulaciones where "
+                    + "dni_candidato = CANDIDATO_dni_candidato and OFERTA_TRABAJO_id_oferta = id_oferta");
             PreparedStatement sql = con.prepareStatement(query);
             ResultSet res = sql.executeQuery();
             
@@ -55,13 +54,14 @@ public class DAO {
                 String nombreApellido = res.getString("nombreApellido");
                 String puesto = res.getString("puesto");
                 
-                //Postulaciones postulante = new Postulaciones(nombreApellido, puesto);
-                //datos.add(postulante);
+                Postulaciones postulante = new Postulaciones(nombreApellido, puesto);
+                datos.add(postulante);
             }
             
         }catch(SQLException e){
             e.getMessage();
         }
+        System.out.println("cantidad de datos " + datos.size());
         return datos;
     }
     

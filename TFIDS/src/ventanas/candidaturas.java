@@ -115,19 +115,21 @@ public class candidaturas extends JFrame {
         
         DAO dao = new DAO();
         ArrayList<Postulaciones> postulantes = dao.getPostulaciones();
+        System.out.println("Cantidad de postulastes" + postulantes.size());
         
-        /*for(int i=0; i<postulantes.size();i++){
+        //Iteracion para mostrar cada uno de los postulantes
+        for(int i=0; i<postulantes.size();i++){
             //String nombreApellido = postulantes.get(i).getNombreApellido();
             //String puesto = postulantes.get(i).getPuesto();
                 listaCandidatosPanel.add(crearCandidatoPanel(postulantes.get(i).getNombreApellido(),
                     postulantes.get(i).getPuesto(), "Ingeniería Mecanica"));
-            listaCandidatosPanel.revalidate();
-            listaCandidatosPanel.repaint();
-        }*/
+            //listaCandidatosPanel.revalidate();
+            //listaCandidatosPanel.repaint();
+        }
 
-        listaCandidatosPanel.add(crearCandidatoPanel("Jasmin Berdu", "Supervisor de obra", "Ingeniería Mecanica"));
-        listaCandidatosPanel.add(crearCandidatoPanel("Marcos Brandan", "Administrador", "Ingeniería en Sistemas"));
-        listaCandidatosPanel.add(crearCandidatoPanel("Rocio Aguero", "Analista de Calidad", "Ingeniería Química"));
+        //listaCandidatosPanel.add(crearCandidatoPanel("Jasmin Berdu", "Supervisor de obra", "Ingeniería Mecanica"));
+        //listaCandidatosPanel.add(crearCandidatoPanel("Marcos Brandan", "Administrador", "Ingeniería en Sistemas"));
+        //listaCandidatosPanel.add(crearCandidatoPanel("Rocio Aguero", "Analista de Calidad", "Ingeniería Química"));
         listaCandidatosPanel.add(crearCandidatoPanel("Gonzalo Albarracín", "Operario", "Ingeniería Electrica"));
 
         listaCandidatosPanel.revalidate();

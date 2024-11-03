@@ -10,4 +10,19 @@ package tfids;
  */
 public class Postulaciones {
     
+    private String nombreApellido;
+    private String puesto;
+    
+    public Postulaciones(String nombreApellido, String puesto){
+        this.nombreApellido = nombreApellido;
+        this.puesto = puesto;
+    }
+
+    public String getNombreApellido() {
+        return nombreApellido;
+    }
+
+    public String getPuesto() {
+        return puesto;
+    }
 }
