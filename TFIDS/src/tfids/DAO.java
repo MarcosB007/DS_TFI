@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -36,6 +37,32 @@ public class DAO {
             e.getMessage();
         }
         return false;
+    }
+    
+    public ArrayList candidatos() throws FileNotFoundException{
+        
+        ArrayList<Postulaciones> datos = new ArrayList<>();
+        
+        try{
+            java.sql.Connection con = conexionDB.getInstance().getConexion();
+            String query = "SELECT * FORM postulaciones";
+            //SELECT nombreApellido, puesto FROM candidato, oferta_trabajo, postulaciones where"
+                    //+ "dni_candidato = CANDIDATO_dni_candidato and OFERTA_TRABAJO_id_oferta = id_oferta
+            PreparedStatement sql = con.prepareStatement(query);
+            ResultSet res = sql.executeQuery();
+            
+            while(res.next()){
+                String nombreApellido = res.getString("nombreApellido");
+                String puesto = res.getString("puesto");
+                
+                Postulaciones postulante = new Postulaciones(nombreApellido, puesto);
+                datos.add(postulante);
+            }
+            
+        }catch(SQLException e){
+            
+        }
+        return datos;
     }
     
 }
