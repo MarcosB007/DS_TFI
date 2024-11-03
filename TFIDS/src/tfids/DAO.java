@@ -55,8 +55,8 @@ public class DAO {
                 String nombreApellido = res.getString("nombreApellido");
                 String puesto = res.getString("puesto");
                 
-                Postulaciones postulante = new Postulaciones(nombreApellido, puesto);
-                datos.add(postulante);
+                //Postulaciones postulante = new Postulaciones(nombreApellido, puesto);
+                //datos.add(postulante);
             }
             
         }catch(SQLException e){

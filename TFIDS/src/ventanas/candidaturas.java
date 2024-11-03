@@ -16,8 +16,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import tfids.DAO;
+import tfids.Postulaciones;
 
 public class candidaturas extends JFrame {
 
@@ -112,7 +114,16 @@ public class candidaturas extends JFrame {
         cvs.put("Gonzalio Albarracín", "path/to/Gonzalo_Albarracin_CV.pdf");
         
         DAO dao = new DAO();
-        dao.getPostulaciones();
+        ArrayList<Postulaciones> postulantes = dao.getPostulaciones();
+        
+        /*for(int i=0; i<postulantes.size();i++){
+            //String nombreApellido = postulantes.get(i).getNombreApellido();
+            //String puesto = postulantes.get(i).getPuesto();
+                listaCandidatosPanel.add(crearCandidatoPanel(postulantes.get(i).getNombreApellido(),
+                    postulantes.get(i).getPuesto(), "Ingeniería Mecanica"));
+            listaCandidatosPanel.revalidate();
+            listaCandidatosPanel.repaint();
+        }*/
 
         listaCandidatosPanel.add(crearCandidatoPanel("Jasmin Berdu", "Supervisor de obra", "Ingeniería Mecanica"));
         listaCandidatosPanel.add(crearCandidatoPanel("Marcos Brandan", "Administrador", "Ingeniería en Sistemas"));
