@@ -39,7 +39,7 @@ public class DAO {
         return false;
     }
     
-    public ArrayList candidatos() throws FileNotFoundException{
+    public ArrayList getPostulaciones() throws FileNotFoundException{
         
         ArrayList<Postulaciones> datos = new ArrayList<>();
         
@@ -60,7 +60,7 @@ public class DAO {
             }
             
         }catch(SQLException e){
-            
+            e.getMessage();
         }
         return datos;
     }
