@@ -108,7 +108,7 @@ public class candidaturas extends JFrame {
         cvs.put("Jasmin Berdu", "CVBerduJasmin.pdf");
         cvs.put("Marcos Brandan", "path/to/Marcos_Brandan_CV.pdf");
         cvs.put("Rocio Aguero", "path/to/Rocio_Aguero_CV.pdf");
-        cvs.put("Gonzalo Albarracín", "path/to/Gonzalo_Albarracin_CV.pdf");
+        cvs.put("Gonzalio Albarracín", "path/to/Gonzalo_Albarracin_CV.pdf");
 
         listaCandidatosPanel.add(crearCandidatoPanel("Jasmin Berdu", "Supervisor de obra", "Ingeniería Mecanica"));
         listaCandidatosPanel.add(crearCandidatoPanel("Marcos Brandan", "Administrador", "Ingeniería en Sistemas"));
