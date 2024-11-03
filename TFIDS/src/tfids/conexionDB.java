@@ -19,37 +19,42 @@ public class conexionDB {
     private static conexionDB instance;
     private Connection conexion = null;
     
-    public  conexionDB() throws FileNotFoundException{
-        
+    public conexionDB() {
         Properties properties = new Properties();
         
-        try{
+        try {
             properties.load(new FileInputStream("../config.properties"));
-            String url= properties.getProperty("db.url");
-            String user= properties.getProperty("db.user");
-            String password= properties.getProperty("db.password");
-            conexion = DriverManager.getConnection(url,user,password);
+            String url = properties.getProperty("db.url");
+            String user = properties.getProperty("db.user");
+            String password = properties.getProperty("db.password");
+            conexion = DriverManager.getConnection(url, user, password);
             
             System.out.println("Conexion exitosa");
             
-        }catch(SQLException e){
-            System.out.println("Error al conectarse a la base de datos");
-            e.getMessage();
+        } catch (SQLException e) {
+            System.out.println("Error al conectarse a la base de datos: " + e.getMessage());
         } catch (IOException ex) {
-            System.out.println("Error al cargar el archivo de credenciales " + ex.getMessage());
+            System.out.println("Error al cargar el archivo de credenciales: " + ex.getMessage());
         }
     }
     
-    public static conexionDB getInstance() throws SQLException, FileNotFoundException{
-        if(instance == null){
+    public static conexionDB getInstance() {
+        if (instance == null) {
             instance = new conexionDB();
-        }else if(instance.getConexion().isClosed()){
-            instance = new conexionDB();
+        } else {
+            try {
+                if (instance.getConexion().isClosed()) {
+                    instance = new conexionDB();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException("Error al verificar el estado de la conexión: " + e.getMessage());
+            }
         }
         return instance;
     }
     
-    public Connection getConexion(){
+    public Connection getConexion() {
         return conexion;
     }
 }
+

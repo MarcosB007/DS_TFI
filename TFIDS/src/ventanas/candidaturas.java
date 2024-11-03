@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import tfids.DAO;
 
 public class candidaturas extends JFrame {
 
@@ -109,6 +110,9 @@ public class candidaturas extends JFrame {
         cvs.put("Marcos Brandan", "path/to/Marcos_Brandan_CV.pdf");
         cvs.put("Rocio Aguero", "path/to/Rocio_Aguero_CV.pdf");
         cvs.put("Gonzalio Albarracín", "path/to/Gonzalo_Albarracin_CV.pdf");
+        
+        DAO dao = new DAO();
+        dao.getPostulaciones();
 
         listaCandidatosPanel.add(crearCandidatoPanel("Jasmin Berdu", "Supervisor de obra", "Ingeniería Mecanica"));
         listaCandidatosPanel.add(crearCandidatoPanel("Marcos Brandan", "Administrador", "Ingeniería en Sistemas"));

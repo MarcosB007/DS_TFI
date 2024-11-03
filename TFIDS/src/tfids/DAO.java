@@ -39,7 +39,7 @@ public class DAO {
         return false;
     }
     
-    public ArrayList getPostulaciones() throws FileNotFoundException{
+    public ArrayList getPostulaciones(){
         
         ArrayList<Postulaciones> datos = new ArrayList<>();
         
