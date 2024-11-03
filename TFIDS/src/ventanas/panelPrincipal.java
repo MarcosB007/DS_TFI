@@ -86,6 +86,14 @@ public class panelPrincipal extends JFrame {
                     }
                 });
             }
+            if (text.equals("Entrevistas")) {
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        new Entrevistas().setVisible(true); // Abre la ventana PublicarOferta
+                    }
+                });
+            }
 
             buttonPanel.add(button);
         }
