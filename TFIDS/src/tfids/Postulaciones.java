@@ -13,4 +13,9 @@ public class Postulaciones {
     private String nombreApellido;
     private String puesto;
     
+    public Postulaciones(String nombreApellido, String puesto){
+        this.nombreApellido = nombreApellido;
+        this.puesto = puesto;
+    }
+    
 }
