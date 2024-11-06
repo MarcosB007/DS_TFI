@@ -18,10 +18,10 @@ import javax.swing.JFrame;
  */
 public class DAO {
     
-    public boolean validarUsuario(String user, String password) throws FileNotFoundException{
+    public boolean validarUsuario(String user, String password){
          
         try{
-            
+            boolean variable = false;
             java.sql.Connection con = conexionDB.getInstance().getConexion();
             String query = "SELECT * FROM usuario WHERE user=? and password=?";
             PreparedStatement sql = con.prepareStatement(query);
@@ -30,25 +30,30 @@ public class DAO {
             ResultSet resultado = sql.executeQuery();
             
             if(resultado.next()){
-                String usuario = resultado.getString("username");
-                String contrasenia = resultado.getString("password");
-                int gerenteDni = resultado.getInt("GERENTE_dni");
+                variable = true;
+                /*if(variable){
+                    System.out.println("llega hasta aqui");
+                    String usuario = resultado.getString("username");
+                    String contrasenia = resultado.getString("password");
+                    int gerenteDni = resultado.getInt("GERENTE_dni");
+
+                    String query2 = "SELECT * FROM gerente WHERE dni=?";
+                    PreparedStatement sql2 = con.prepareStatement(query2);
+                    sql2.setInt(1, gerenteDni);
+                    ResultSet resultado2 = sql2.executeQuery();
+
+                    String nombreGerente = resultado2.getString("nombreApellido");
+                    Date fechaNacimiento = resultado2.getDate("fechaNacimiento");
+                    int celular = resultado2.getInt("celular");
+                    String email = resultado2.getString("email");
+
+                    Gerente gerente = new Gerente(gerenteDni, nombreGerente, fechaNacimiento, celular, email);
+
+                    new Usuario(usuario, contrasenia, gerente);
+                }*/
                 
-                String query2 = "SELECT * FROM gerente WHERE dni=?";
-                PreparedStatement sql2 = con.prepareStatement(query2);
-                sql2.setInt(1, gerenteDni);
-                ResultSet resultado2 = sql2.executeQuery();
-                
-                String nombreGerente = resultado2.getString("nombreApellido");
-                Date fechaNacimiento = resultado2.getDate("fechaNacimiento");
-                int celular = resultado2.getInt("celular");
-                String email = resultado2.getString("email");
-                
-                Gerente gerente = new Gerente(gerenteDni, nombreGerente, fechaNacimiento, celular, email);
-                
-                Usuario nuevoUsuario = new Usuario(usuario, contrasenia, gerente);
-                return true;
             }
+            return variable;
             
         }catch(SQLException e){
             e.getMessage();
@@ -91,13 +96,18 @@ public class DAO {
     public void CrearOferta(String puesto, String descripcion){
         
         try{
+            Gerente gerente = Gerente.getInstancia();
+            int dniGerente = gerente.getDni();
             java.sql.Connection con = conexionDB.getInstance().getConexion();
             String query = ("INSERT INTO oferta_trabajo(puesto, fechaPublicacion, descipcion, GERENTE_dni) "
                     + "values (?, now(), ?, ?)");
             PreparedStatement sql = con.prepareStatement(query);
             ResultSet res = sql.executeQuery();
+            sql.setString(1, puesto);
+            sql.setString(3, descripcion);
+            sql.setInt(4, dniGerente);
         } catch(Exception e){
-            
+            e.getMessage();
         }
     }
 }

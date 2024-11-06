@@ -10,6 +10,7 @@ package tfids;
  */
 public class Usuario {
     
+    private static Usuario instancia;
     private int id_usuario;
     private String username;
     private String password;
@@ -19,6 +20,10 @@ public class Usuario {
         this.username = username;
         this.password = password;
         this.gerente = gerenteDNI;
+    }
+    
+    public static Usuario getInstancia(){
+        return instancia;
     }
 
     public int getId_usuario() {
