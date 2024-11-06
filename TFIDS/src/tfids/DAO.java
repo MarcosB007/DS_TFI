@@ -30,7 +30,23 @@ public class DAO {
             ResultSet resultado = sql.executeQuery();
             
             if(resultado.next()){
-               
+                String usuario = resultado.getString("username");
+                String contrasenia = resultado.getString("password");
+                int gerenteDni = resultado.getInt("GERENTE_dni");
+                
+                String query2 = "SELECT * FROM gerente WHERE dni=?";
+                PreparedStatement sql2 = con.prepareStatement(query2);
+                sql2.setInt(1, gerenteDni);
+                ResultSet resultado2 = sql2.executeQuery();
+                
+                String nombreGerente = resultado2.getString("nombreApellido");
+                Date fechaNacimiento = resultado2.getDate("fechaNacimiento");
+                int celular = resultado2.getInt("celular");
+                String email = resultado2.getString("email");
+                
+                Gerente gerente = new Gerente(gerenteDni, nombreGerente, fechaNacimiento, celular, email);
+                
+                Usuario nuevoUsuario = new Usuario(usuario, contrasenia, gerente);
                 return true;
             }
             
@@ -70,5 +86,18 @@ public class DAO {
         ventanaAbrir.setVisible(true);
         ventanaCerrar.setVisible(false);
         
+    }
+    
+    public void CrearOferta(String puesto, String descripcion){
+        
+        try{
+            java.sql.Connection con = conexionDB.getInstance().getConexion();
+            String query = ("INSERT INTO oferta_trabajo(puesto, fechaPublicacion, descipcion, GERENTE_dni) "
+                    + "values (?, now(), ?, ?)");
+            PreparedStatement sql = con.prepareStatement(query);
+            ResultSet res = sql.executeQuery();
+        } catch(Exception e){
+            
+        }
     }
 }

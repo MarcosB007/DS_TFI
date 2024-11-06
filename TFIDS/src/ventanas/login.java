@@ -114,6 +114,7 @@ public class login extends JFrame {
                 System.out.println(resultado);
                 // Verificar credenciales (ajusta según tu lógica de autenticación)
                 if (resultado) {
+                    //Usuario usuario = new Usuario(username, password, );
                   //dao.getVentana(new panelPrincipal(), this);
                     dispose(); // Cierra la ventana de inicio de sesión
                     panelPrincipal v = new panelPrincipal(); // Abre la ventana principal
