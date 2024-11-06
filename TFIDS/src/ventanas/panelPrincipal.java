@@ -12,12 +12,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import tfids.*;
 
 public class panelPrincipal extends JFrame {
     private JLabel background;
+    
 
     public panelPrincipal() {
+        
         setTitle("Contratación RRHH - Ingenio La Trinidad");
         setSize(800, 600); // Tamaño inicial
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,7 +76,10 @@ public class panelPrincipal extends JFrame {
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        new Oferta(); // Abre la ventana PublicarOferta
+                        dispose();
+                        new Oferta().setVisible(true); // Abre la ventana PublicarOferta
+                        
+                        //DAO.getVentana(new Oferta(), ventanaPrincipal);
                     }
                 });
             }
@@ -82,6 +87,7 @@ public class panelPrincipal extends JFrame {
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        dispose();
                         new candidaturas().setVisible(true); // Abre la ventana PublicarOferta
                     }
                 });
@@ -90,7 +96,26 @@ public class panelPrincipal extends JFrame {
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        dispose();
                         new Entrevistas().setVisible(true); // Abre la ventana PublicarOferta
+                    }
+                });
+            }
+            if (text.equals("Evaluación de Entrevistas")) {
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        dispose();
+                        new decision().setVisible(true); // Abre la ventana PublicarOferta
+                    }
+                });
+            }
+            if (text.equals("Contratación")) {
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        dispose();
+                        new MainFrame().setVisible(true); // Abre la ventana PublicarOferta
                     }
                 });
             }
@@ -119,7 +144,7 @@ public class panelPrincipal extends JFrame {
         background.add(footerPanel, BorderLayout.SOUTH);
 
         // Hacer visible la ventana
-        setVisible(true);
+        //setVisible(true);
     }
 
 

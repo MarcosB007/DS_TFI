@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.*;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 
 /**
  *
@@ -65,4 +66,9 @@ public class DAO {
         return datos;
     }
     
+    public static void getVentana(JFrame ventanaAbrir, JFrame ventanaCerrar){
+        ventanaAbrir.setVisible(true);
+        ventanaCerrar.setVisible(false);
+        
+    }
 }

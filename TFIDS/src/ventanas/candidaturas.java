@@ -95,7 +95,11 @@ public class candidaturas extends JFrame {
         volverButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                volverAlMenu();
+                //volverAlMenu();
+                panelPrincipal ventanaPrincipal = new panelPrincipal();
+                candidaturas ventanaActual = new candidaturas();
+                ventanaActual.setVisible(false);
+                ventanaPrincipal.setVisible(true);
             }
         });
         bottomPanel.add(volverButton);
@@ -197,13 +201,13 @@ public class candidaturas extends JFrame {
         listaCandidatosPanel.repaint();
     }
 
-    private void volverAlMenu() {
-         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this); // Obtener la ventana principal
+    /*private void volverAlMenu() {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this); // Obtener la ventana principal
         frame.setContentPane(new panelPrincipal()); // Cambiar el contenido por el panel principal
         frame.revalidate(); // Revalidar el contenido del marco
         frame.repaint(); 
         // Lógica para volver al menú principal
-    }
+    }*/
 
     private void verCV(String nombre) {
         try {
