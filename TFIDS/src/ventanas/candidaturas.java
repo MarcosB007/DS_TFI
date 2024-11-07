@@ -96,10 +96,13 @@ public class candidaturas extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //volverAlMenu();
-                panelPrincipal ventanaPrincipal = new panelPrincipal();
+                
+                dispose();
+                new panelPrincipal().setVisible(true);
+                /*panelPrincipal ventanaPrincipal = new panelPrincipal();
                 candidaturas ventanaActual = new candidaturas();
                 ventanaActual.setVisible(false);
-                ventanaPrincipal.setVisible(true);
+                ventanaPrincipal.setVisible(true);*/
             }
         });
         bottomPanel.add(volverButton);
@@ -126,7 +129,7 @@ public class candidaturas extends JFrame {
             //String nombreApellido = postulantes.get(i).getNombreApellido();
             //String puesto = postulantes.get(i).getPuesto();
                 listaCandidatosPanel.add(crearCandidatoPanel(postulantes.get(i).getNombreApellido(),
-                    postulantes.get(i).getPuesto(), "Ingeniería Mecanica"));
+                postulantes.get(i).getPuesto(), "Ingeniería Mecanica"));
             //listaCandidatosPanel.revalidate();
             //listaCandidatosPanel.repaint();
         }

@@ -119,6 +119,7 @@ public class Oferta extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+                new panelPrincipal().setVisible(true);
             }
         });
 

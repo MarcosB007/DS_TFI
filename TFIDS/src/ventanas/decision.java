@@ -55,6 +55,7 @@ public class decision extends JFrame {
         btnVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose();  // Cierra la ventana actual
+                new panelPrincipal().setVisible(true);
                 // Aquí puedes añadir lógica para volver a la pantalla anterior
             }
         });

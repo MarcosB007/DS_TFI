@@ -122,7 +122,7 @@ public class login extends JFrame {
                 } else {
                 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
                 }
-            } catch (FileNotFoundException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
             }
         });

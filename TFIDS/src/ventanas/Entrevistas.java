@@ -74,7 +74,7 @@ public class Entrevistas extends JFrame {
                 // Aquí puedes volver al panel principal o cerrar la ventana
                 // Si solo deseas cerrar la ventana actual:
                 dispose();
-                
+                new panelPrincipal().setVisible(true);
                 // Si tienes un método para volver al panel principal, puedes llamarlo aquí.
                 // por ejemplo: mostrarPanelPrincipal();
             }
