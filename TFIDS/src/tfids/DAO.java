@@ -21,7 +21,7 @@ public class DAO {
     public boolean validarUsuario(String user, String password){
          
         try{
-            boolean variable = false;
+            
             java.sql.Connection con = conexionDB.getInstance().getConexion();
             String query = "SELECT * FROM usuario WHERE user=? and password=?";
             PreparedStatement sql = con.prepareStatement(query);
@@ -29,31 +29,41 @@ public class DAO {
             sql.setString(2, password);
             ResultSet resultado = sql.executeQuery();
             
-            if(resultado.next()){
-                variable = true;
-                /*if(variable){
-                    System.out.println("llega hasta aqui");
-                    String usuario = resultado.getString("username");
-                    String contrasenia = resultado.getString("password");
-                    int gerenteDni = resultado.getInt("GERENTE_dni");
+            if (resultado.next()) {
 
-                    String query2 = "SELECT * FROM gerente WHERE dni=?";
-                    PreparedStatement sql2 = con.prepareStatement(query2);
-                    sql2.setInt(1, gerenteDni);
-                    ResultSet resultado2 = sql2.executeQuery();
+                
+                int gerenteDni = resultado.getInt("GERENTE_dni");
+                System.out.println(gerenteDni);
+                //String usuario = resultado.getString("username");
+                //String contrasenia = resultado.getString("password");
+                
+                
+                String query2 = "SELECT * FROM gerente WHERE dni=?";
+                PreparedStatement sql2 = con.prepareStatement(query2);
+                sql2.setInt(1, gerenteDni);
+                ResultSet resultado2 = sql2.executeQuery();
 
+                // Verificamos que haya un registro en el resultado de la segunda consulta
+                if (resultado2.next()) {
                     String nombreGerente = resultado2.getString("nombreApellido");
                     Date fechaNacimiento = resultado2.getDate("fechaNacimiento");
                     int celular = resultado2.getInt("celular");
                     String email = resultado2.getString("email");
-
+                    System.out.println(nombreGerente);
                     Gerente gerente = new Gerente(gerenteDni, nombreGerente, fechaNacimiento, celular, email);
-
-                    new Usuario(usuario, contrasenia, gerente);
-                }*/
-                
+                    new Usuario(user, password, gerente);
+                    
+                    if(Gerente.getInstancia(celular, nombreGerente, fechaNacimiento, celular, email) == null){
+                        System.out.println("instancia null");
+                    }else{
+                        System.out.println("intancia creada");
+                    }
+                    //System.out.println("se encontró gerente con el DNI especificado");
+                } else {
+                    System.out.println("No se encontró gerente con el DNI especificado");
+                }   
             }
-            return variable;
+            return true;
             
         }catch(SQLException e){
             e.getMessage();
@@ -96,16 +106,23 @@ public class DAO {
     public void CrearOferta(String puesto, String descripcion){
         
         try{
+            //System.out.println("llega");
             Gerente gerente = Gerente.getInstancia();
+            /*if(gerente == null){
+                System.out.println("valor del gerente null");
+            }*/
             int dniGerente = gerente.getDni();
+            System.out.println("dni gerente metodo crearOferta " + dniGerente);
             java.sql.Connection con = conexionDB.getInstance().getConexion();
-            String query = ("INSERT INTO oferta_trabajo(puesto, fechaPublicacion, descipcion, GERENTE_dni) "
-                    + "values (?, now(), ?, ?)");
-            PreparedStatement sql = con.prepareStatement(query);
-            ResultSet res = sql.executeQuery();
+            
+            //String query = ();
+            PreparedStatement sql = con.prepareStatement("INSERT INTO oferta_trabajo (puesto, fechaPublicacion, descripcion, GERENTE_dni) VALUES (?, CURRENT_DATE, ?, ?)");
             sql.setString(1, puesto);
-            sql.setString(3, descripcion);
-            sql.setInt(4, dniGerente);
+            sql.setString(2, descripcion);
+            sql.setInt(3, dniGerente);
+            
+            sql.executeUpdate();
+            System.out.println("llega aqui aaaaaaaaaassssss");
         } catch(Exception e){
             e.getMessage();
         }

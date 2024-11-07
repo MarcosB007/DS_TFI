@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import tfids.DAO;
 
 public class Oferta extends JFrame {
     private JTextField puestoField;
@@ -106,6 +107,11 @@ public class Oferta extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (validarCampos()) {
+                    String puestoValor = puestoField.getText();
+                    String descripcionValor = descripcionField.getText();
+                    //System.out.println(puestoValor);
+                    //System.out.println(descripcionValor);
+                    new DAO().CrearOferta(puestoValor, descripcionValor);
                     JOptionPane.showMessageDialog(Oferta.this, "Oferta de trabajo publicada exitosamente.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
                     // Lógica para guardar la oferta
                 } else {
