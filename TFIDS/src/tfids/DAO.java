@@ -33,7 +33,7 @@ public class DAO {
 
                 
                 int gerenteDni = resultado.getInt("GERENTE_dni");
-                System.out.println(gerenteDni);
+                //System.out.println("Resultado dni gerente " + gerenteDni);
                 //String usuario = resultado.getString("username");
                 //String contrasenia = resultado.getString("password");
                 
@@ -47,13 +47,14 @@ public class DAO {
                 if (resultado2.next()) {
                     String nombreGerente = resultado2.getString("nombreApellido");
                     Date fechaNacimiento = resultado2.getDate("fechaNacimiento");
-                    int celular = resultado2.getInt("celular");
+                    String celular = Integer.toString(resultado2.getInt("celular"));
                     String email = resultado2.getString("email");
                     System.out.println(nombreGerente);
+                    System.out.println("Creando instancia en validar usuario de Gerente con DNI: " + gerenteDni + ", Celular: " + celular);
                     Gerente gerente = new Gerente(gerenteDni, nombreGerente, fechaNacimiento, celular, email);
                     new Usuario(user, password, gerente);
                     
-                    if(Gerente.getInstancia(celular, nombreGerente, fechaNacimiento, celular, email) == null){
+                    if(Gerente.getInstancia(gerenteDni, nombreGerente, fechaNacimiento, celular, email) == null){
                         System.out.println("instancia null");
                     }else{
                         System.out.println("intancia creada");
@@ -108,8 +109,12 @@ public class DAO {
         try{
             //System.out.println("llega");
             Gerente gerente = Gerente.getInstancia();
+            System.out.println("DNI del gerente: " + gerente.getDni());
+            System.out.println("Celular del gerente: " + gerente.getCelular());
             /*if(gerente == null){
                 System.out.println("valor del gerente null");
+            }else{
+                System.out.println("la instancia no es nula");
             }*/
             int dniGerente = gerente.getDni();
             System.out.println("dni gerente metodo crearOferta " + dniGerente);

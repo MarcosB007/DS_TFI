@@ -16,10 +16,10 @@ public class Gerente {
     private int dni;
     private String nombreApellido;
     private Date fechaNacimiento;
-    private int celular;
+    private String celular;
     private String email;
     
-    public Gerente(int dni, String nombreApellido, Date fechaNacimiento, int celular, String email){
+    public Gerente(int dni, String nombreApellido, Date fechaNacimiento, String celular, String email){
         this.dni = dni;
         this.nombreApellido = nombreApellido;
         this.fechaNacimiento = fechaNacimiento;
@@ -27,14 +27,18 @@ public class Gerente {
         this.email = email;
     }
     
-    public static Gerente getInstancia(int dni, String nombreApellido, Date fechaNacimiento, int celular, String email) {
+    public static Gerente getInstancia(int dni, String nombreApellido, Date fechaNacimiento, String celular, String email) {
         if (instancia == null) {  // Solo crea la instancia si aún no existe
+            System.out.println("Creando instancia de Gerente con DNI: " + dni + ", Celular: " + celular);
             instancia = new Gerente(dni, nombreApellido, fechaNacimiento, celular, email);
         }
         return instancia;
     }
     
     public static Gerente getInstancia(){
+        if(instancia == null){
+            System.out.println("instancia nula");
+        }
         return instancia;
     }
     
@@ -50,7 +54,7 @@ public class Gerente {
         return fechaNacimiento;
     }
 
-    public int getCelular() {
+    public String getCelular() {
         return celular;
     }
 
