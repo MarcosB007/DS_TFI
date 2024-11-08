@@ -28,6 +28,10 @@ public class Candidato {
         this.email = email;
         this.seleccionado = seleccionado;
     }
+    
+    public Candidato(){
+        
+    }
 
     public int getDni() {
         return dni;

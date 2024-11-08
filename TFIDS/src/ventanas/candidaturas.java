@@ -28,6 +28,7 @@ public class candidaturas extends JFrame {
     private JComboBox<String> filtroOfertaComboBox;
     private JPanel listaCandidatosPanel;
     private HashMap<String, String> cvs;
+    private int dniCandidatoForButton;
 
     public candidaturas() {
         setTitle("Ingenio La Trinidad - Gestión de Candidaturas");
@@ -98,13 +99,8 @@ public class candidaturas extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //volverAlMenu();
-                
                 dispose();
                 new panelPrincipal().setVisible(true);
-                /*panelPrincipal ventanaPrincipal = new panelPrincipal();
-                candidaturas ventanaActual = new candidaturas();
-                ventanaActual.setVisible(false);
-                ventanaPrincipal.setVisible(true);*/
             }
         });
         bottomPanel.add(volverButton);
@@ -116,55 +112,35 @@ public class candidaturas extends JFrame {
 
     private void agregarCandidatos() {
         listaCandidatosPanel.removeAll();
-
-        /*cvs.put("Jasmin Berdu", "CVBerduJasmin.pdf");
-        cvs.put("Marcos Brandan", "path/to/Marcos_Brandan_CV.pdf");
-        cvs.put("Rocio Aguero", "path/to/Rocio_Aguero_CV.pdf");
-        cvs.put("Gonzalio Albarracín", "path/to/Gonzalo_Albarracin_CV.pdf");
-        */
         
         ArrayList<Postulaciones> postulantes = dao.getPostulaciones();
         ArrayList<Candidato> candidatos = dao.getCandidatos();
         ArrayList<OfertaTrabajo> ofertas = dao.getOfertas();
-        //System.out.println("Cantidad de postulastes" + postulantes.size());
-        //System.out.println("Cantidad de candidatos: " + candidatos.size());
-        //Iteracion para mostrar cada uno de los postulantes
+
         for(int i=0; i<postulantes.size();i++){
             String nombreApellido = "";
+            Candidato candidato = new Candidato();
             String puesto = "";
             for(int j=0; j<candidatos.size();j++){
-                //System.out.println("este es el valor del nombre " + nombreApellido);
                 if(postulantes.get(i).getDni() == candidatos.get(j).getDni()){ 
                     nombreApellido = candidatos.get(j).getNombreApellido();
-                    
-                }
-                
+                    candidato = candidatos.get(j);
+                }  
             }
             for(int k=0; k < ofertas.size(); k++){
-                
                 if(postulantes.get(i).getIdOferta() == ofertas.get(k).getIdOferta()){
                     puesto = ofertas.get(k).getPuesto();
                 }
             }
             
-            listaCandidatosPanel.add(crearCandidatoPanel(nombreApellido,puesto));
-                
-                
-            /*System.out.println("este es el valor del puesto" + puesto);
-            listaCandidatosPanel.revalidate();
-            listaCandidatosPanel.repaint();*/
+            listaCandidatosPanel.add(crearCandidatoPanel(candidato,puesto));
         }
-
-        //listaCandidatosPanel.add(crearCandidatoPanel("Jasmin Berdu", "Supervisor de obra", "Ingeniería Mecanica"));
-        //listaCandidatosPanel.add(crearCandidatoPanel("Marcos Brandan", "Administrador", "Ingeniería en Sistemas"));
-        //listaCandidatosPanel.add(crearCandidatoPanel("Rocio Aguero", "Analista de Calidad", "Ingeniería Química"));
-        //listaCandidatosPanel.add(crearCandidatoPanel("Gonzalo Albarracín", "Operario", "Ingeniería Electrica"));
 
         listaCandidatosPanel.revalidate();
         listaCandidatosPanel.repaint();
     }
 
-    private JPanel crearCandidatoPanel(String nombre, String oferta) {
+    /*private JPanel crearCandidatoPanel(String nombre, String oferta) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panel.setBackground(new Color(245, 245, 245));
@@ -174,7 +150,7 @@ public class candidaturas extends JFrame {
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setBackground(new Color(245, 245, 245));
 
-        JLabel nombreLabel = new JLabel("<html><b>" + nombre + "</b><br>Oferta: " + oferta /*+ "<br>Nombre: " + nombre + "</html>"*/);
+        JLabel nombreLabel = new JLabel("<html><b>" + nombre + "</b><br>Oferta: " + oferta);
         nombreLabel.setFont(new Font("Serif", Font.PLAIN, 14));
         infoPanel.add(nombreLabel);
 
@@ -209,7 +185,57 @@ public class candidaturas extends JFrame {
         panel.putClientProperty("oferta", oferta);
         //panel.putClientProperty("nombre", nombre);
         return panel;
-    }
+    }*/
+    
+    private JPanel crearCandidatoPanel(Candidato candidato, String oferta) {
+    JPanel panel = new JPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS)); // Coloca el contenido en horizontal
+    panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    panel.setBackground(new Color(245, 245, 245));
+    panel.setMaximumSize(new Dimension(600, 60)); // Limita el ancho del panel
+
+    // Información del candidato en la izquierda
+    JPanel infoPanel = new JPanel();
+    infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+    infoPanel.setBackground(new Color(245, 245, 245));
+    infoPanel.setMaximumSize(new Dimension(400, 60)); // Limita el ancho del infoPanel
+
+    JLabel nombreLabel = new JLabel("<html><b>" + candidato.getNombreApellido() + "</b><br>Oferta: " + oferta + "</html>");
+    nombreLabel.setFont(new Font("Serif", Font.PLAIN, 14));
+    infoPanel.add(nombreLabel);
+
+    JLabel verCvLabel = new JLabel("<html><u>Ver CV</u></html>");
+    verCvLabel.setForeground(Color.BLUE);
+    verCvLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    verCvLabel.setFont(new Font("Serif", Font.ITALIC, 12));
+    verCvLabel.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            verCV(candidato.getNombreApellido()); // Llama a verCV con el nombre del candidato
+        }
+    });
+    infoPanel.add(verCvLabel);
+
+    panel.add(infoPanel);
+
+    // Botón Confirmar en la derecha, ajustado a un tamaño más pequeño
+    JButton confirmarButton = new JButton("Confirmar");
+    confirmarButton.setPreferredSize(new Dimension(80, 30)); // Define un tamaño fijo para el botón
+    confirmarButton.setBackground(new Color(0, 123, 62));
+    confirmarButton.setForeground(Color.WHITE);
+    confirmarButton.setFont(new Font("Serif", Font.BOLD, 12));
+    confirmarButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            confirmarCandidato(candidato); // Llama a la función con el objeto Candidato
+        }
+    });
+    panel.add(confirmarButton);
+
+    panel.putClientProperty("oferta", oferta);
+    return panel;
+}
+
 
     private void filtrarCandidatos() {
         String filtroOferta = (String) filtroOfertaComboBox.getSelectedItem();
@@ -226,14 +252,6 @@ public class candidaturas extends JFrame {
         listaCandidatosPanel.repaint();
     }
 
-    /*private void volverAlMenu() {
-        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this); // Obtener la ventana principal
-        frame.setContentPane(new panelPrincipal()); // Cambiar el contenido por el panel principal
-        frame.revalidate(); // Revalidar el contenido del marco
-        frame.repaint(); 
-        // Lógica para volver al menú principal
-    }*/
-
     private void verCV(String nombre) {
         try {
             Desktop.getDesktop().open(new File(cvs.get(nombre)));
@@ -242,8 +260,15 @@ public class candidaturas extends JFrame {
         }
     }
 
-    private void confirmarCandidato(String nombre) {
+    /*private void confirmarCandidato(String nombre) {
         JOptionPane.showMessageDialog(this, "Candidato " + nombre + " confirmado.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+    }*/
+    
+    private void confirmarCandidato(Candidato candidato) {
+        JOptionPane.showMessageDialog(this, "Candidato " + candidato.getNombreApellido() + " confirmado.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+        // Aquí puedes agregar la funcionalidad que deseas, por ejemplo:
+        dao.actualizarEstadoSeleccionado(candidato.getDni());
+        
     }
 
     public static void main(String[] args) {
