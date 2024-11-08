@@ -117,37 +117,42 @@ public class candidaturas extends JFrame {
     private void agregarCandidatos() {
         listaCandidatosPanel.removeAll();
 
-        cvs.put("Jasmin Berdu", "CVBerduJasmin.pdf");
+        /*cvs.put("Jasmin Berdu", "CVBerduJasmin.pdf");
         cvs.put("Marcos Brandan", "path/to/Marcos_Brandan_CV.pdf");
         cvs.put("Rocio Aguero", "path/to/Rocio_Aguero_CV.pdf");
         cvs.put("Gonzalio Albarracín", "path/to/Gonzalo_Albarracin_CV.pdf");
-        
+        */
         
         ArrayList<Postulaciones> postulantes = dao.getPostulaciones();
         ArrayList<Candidato> candidatos = dao.getCandidatos();
         ArrayList<OfertaTrabajo> ofertas = dao.getOfertas();
         //System.out.println("Cantidad de postulastes" + postulantes.size());
-        
+        //System.out.println("Cantidad de candidatos: " + candidatos.size());
         //Iteracion para mostrar cada uno de los postulantes
         for(int i=0; i<postulantes.size();i++){
-            int dniPostulante = postulantes.get(i).getDni();
-            //String nombreApellido = postulantes.get(i).getNombreApellido();
-            //String puesto = postulantes.get(i).getPuesto();
-            // llama al metodo crearCandidatos y los agrega al panel
-                for(int j=0; i<candidatos.size();j++){
-                    int dniCandidato = candidatos.get(j).getDni();
-                    if(dniPostulante == dniCandidato){
-                        
-                        // HACER QUE SE VISUALICEN LOS CANDIDATOS 
-                        
-                        //listaCandidatosPanel.add(crearCandidatoPanel(candidatos.get(j).getNombreApellido(),
-                        //postulantes.get(i).getPuesto()));
-                    }
+            String nombreApellido = "";
+            String puesto = "";
+            for(int j=0; j<candidatos.size();j++){
+                //System.out.println("este es el valor del nombre " + nombreApellido);
+                if(postulantes.get(i).getDni() == candidatos.get(j).getDni()){ 
+                    nombreApellido = candidatos.get(j).getNombreApellido();
+                    
                 }
                 
+            }
+            for(int k=0; k < ofertas.size(); k++){
                 
-            //listaCandidatosPanel.revalidate();
-            //listaCandidatosPanel.repaint();
+                if(postulantes.get(i).getIdOferta() == ofertas.get(k).getIdOferta()){
+                    puesto = ofertas.get(k).getPuesto();
+                }
+            }
+            
+            listaCandidatosPanel.add(crearCandidatoPanel(nombreApellido,puesto));
+                
+                
+            /*System.out.println("este es el valor del puesto" + puesto);
+            listaCandidatosPanel.revalidate();
+            listaCandidatosPanel.repaint();*/
         }
 
         //listaCandidatosPanel.add(crearCandidatoPanel("Jasmin Berdu", "Supervisor de obra", "Ingeniería Mecanica"));
@@ -169,7 +174,7 @@ public class candidaturas extends JFrame {
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setBackground(new Color(245, 245, 245));
 
-        JLabel nombreLabel = new JLabel("<html><b>" + nombre + "</b><br>Oferta: " + oferta/* + "<br>Perfil: " + perfil + "</html>"*/);
+        JLabel nombreLabel = new JLabel("<html><b>" + nombre + "</b><br>Oferta: " + oferta /*+ "<br>Nombre: " + nombre + "</html>"*/);
         nombreLabel.setFont(new Font("Serif", Font.PLAIN, 14));
         infoPanel.add(nombreLabel);
 
@@ -202,7 +207,7 @@ public class candidaturas extends JFrame {
         panel.add(confirmarButton, BorderLayout.EAST);
 
         panel.putClientProperty("oferta", oferta);
-        //panel.putClientProperty("perfil", perfil);
+        //panel.putClientProperty("nombre", nombre);
         return panel;
     }
 

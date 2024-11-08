@@ -11,12 +11,14 @@ import java.util.Date;
  * @author marco
  */
 public class OfertaTrabajo {
+    private int idOferta;
     private String puesto;
     private Date fechaPublicacion;
     private String descripcion;
     private int dniGerente;
     
-    public OfertaTrabajo(String puesto, Date fechaPublicacion, String descripcion, int dniGerente){
+    public OfertaTrabajo(int idOferta, String puesto, Date fechaPublicacion, String descripcion, int dniGerente){
+        this.idOferta = idOferta;
         this.puesto = puesto;
         this.fechaPublicacion = fechaPublicacion;
         this.descripcion = descripcion;
@@ -37,6 +39,10 @@ public class OfertaTrabajo {
 
     public int getDniGerente() {
         return dniGerente;
+    }
+
+    public int getIdOferta() {
+        return idOferta;
     }
     
     

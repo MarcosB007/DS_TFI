@@ -144,7 +144,7 @@ public class DAO {
         try{
             
             java.sql.Connection con = conexionDB.getInstance().getConexion();
-            String query = ("SELECT * FROM candidato WHERE seleccionado=1");
+            String query = ("SELECT * FROM candidato WHERE seleccionado=0");
             PreparedStatement sql = con.prepareStatement(query);
             ResultSet resultado = sql.executeQuery();
             
@@ -196,7 +196,7 @@ public class DAO {
                 String descripcion = resultado.getString("descripcion");
                 int dniGerente = resultado.getInt("GERENTE_dni");
                 
-                OfertaTrabajo oferta = new OfertaTrabajo(puesto, fechaPublicacion, descripcion, dniGerente);
+                OfertaTrabajo oferta = new OfertaTrabajo(id, puesto, fechaPublicacion, descripcion, dniGerente);
                 datos.add(oferta);
             }
             
