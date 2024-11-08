@@ -12,8 +12,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.border.EmptyBorder;
+import tfids.Candidato;
+import tfids.DAO;
 
 public class Entrevistas extends JFrame {
 
@@ -47,15 +50,22 @@ public class Entrevistas extends JFrame {
         contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 
         // Candidato 1
-        JPanel candidate1Panel = crearPanelCandidato("Jasmin Berdu", "Ingeniería Mecánica");
-        contentPanel.add(candidate1Panel);
+        //JPanel candidate1Panel = crearPanelCandidato("Jasmin Berdu", "Ingeniería Mecánica");
+        //contentPanel.add(candidate1Panel);
 
         // Candidato 2
-        JPanel candidate2Panel = crearPanelCandidato("Marcos Brandan", "Ingeniería en Sistemas");
-        contentPanel.add(candidate2Panel);
+        //JPanel candidate2Panel = crearPanelCandidato("Marcos Brandan", "Ingeniería en Sistemas");
+        //contentPanel.add(candidate2Panel);
         
-        JPanel candidate3Panel = crearPanelCandidato("Gonzalo Albarracin", "Ingenieria Civil");
-        contentPanel.add(candidate3Panel);
+        //JPanel candidate3Panel = crearPanelCandidato("Gonzalo Albarracin", "Ingenieria Civil");
+        //contentPanel.add(candidate3Panel);
+        
+        DAO dao = new DAO();
+        ArrayList<Candidato> candidatos = new ArrayList<>();
+        candidatos = dao.getCandidatos();
+        for(int i=0; i<candidatos.size();i++){
+            crearPanelCandidato(candidatos.get(i).getNombreApellido());
+        }
 
         mainPanel.add(contentPanel, BorderLayout.CENTER);
 
@@ -87,7 +97,7 @@ public class Entrevistas extends JFrame {
         add(mainPanel);
     }    
 
-    private JPanel crearPanelCandidato(String nombre, String perfil) {
+    private JPanel crearPanelCandidato(String nombre/*, String perfil*/) {
         JPanel candidatePanel = new JPanel();
         candidatePanel.setLayout(new BorderLayout());
         candidatePanel.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
@@ -101,12 +111,12 @@ public class Entrevistas extends JFrame {
         nameLabel.setFont(new Font("Serif", Font.BOLD, 16));
         nameLabel.setForeground(new Color(24, 78, 119));
 
-        JLabel profileLabel = new JLabel("Perfil: " + perfil);
-        profileLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        profileLabel.setForeground(Color.DARK_GRAY);
+        //JLabel profileLabel = new JLabel("Perfil: " + perfil);
+        //profileLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        //profileLabel.setForeground(Color.DARK_GRAY);
         
         infoPanel.add(nameLabel);
-        infoPanel.add(profileLabel);
+        //infoPanel.add(profileLabel);
 
         // Panel para selección de fecha y hora
         JPanel datetimePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));

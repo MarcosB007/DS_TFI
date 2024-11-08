@@ -128,8 +128,9 @@ public class candidaturas extends JFrame {
         for(int i=0; i<postulantes.size();i++){
             //String nombreApellido = postulantes.get(i).getNombreApellido();
             //String puesto = postulantes.get(i).getPuesto();
+            // llama al metodo crearCandidatos y los agrega al panel
                 listaCandidatosPanel.add(crearCandidatoPanel(postulantes.get(i).getNombreApellido(),
-                postulantes.get(i).getPuesto(), "Ingeniería Mecanica"));
+                postulantes.get(i).getPuesto()));
             //listaCandidatosPanel.revalidate();
             //listaCandidatosPanel.repaint();
         }
@@ -137,13 +138,13 @@ public class candidaturas extends JFrame {
         //listaCandidatosPanel.add(crearCandidatoPanel("Jasmin Berdu", "Supervisor de obra", "Ingeniería Mecanica"));
         //listaCandidatosPanel.add(crearCandidatoPanel("Marcos Brandan", "Administrador", "Ingeniería en Sistemas"));
         //listaCandidatosPanel.add(crearCandidatoPanel("Rocio Aguero", "Analista de Calidad", "Ingeniería Química"));
-        listaCandidatosPanel.add(crearCandidatoPanel("Gonzalo Albarracín", "Operario", "Ingeniería Electrica"));
+        //listaCandidatosPanel.add(crearCandidatoPanel("Gonzalo Albarracín", "Operario", "Ingeniería Electrica"));
 
         listaCandidatosPanel.revalidate();
         listaCandidatosPanel.repaint();
     }
 
-    private JPanel crearCandidatoPanel(String nombre, String oferta, String perfil) {
+    private JPanel crearCandidatoPanel(String nombre, String oferta) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panel.setBackground(new Color(245, 245, 245));
@@ -153,7 +154,7 @@ public class candidaturas extends JFrame {
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setBackground(new Color(245, 245, 245));
 
-        JLabel nombreLabel = new JLabel("<html><b>" + nombre + "</b><br>Oferta: " + oferta + "<br>Perfil: " + perfil + "</html>");
+        JLabel nombreLabel = new JLabel("<html><b>" + nombre + "</b><br>Oferta: " + oferta/* + "<br>Perfil: " + perfil + "</html>"*/);
         nombreLabel.setFont(new Font("Serif", Font.PLAIN, 14));
         infoPanel.add(nombreLabel);
 
@@ -185,7 +186,7 @@ public class candidaturas extends JFrame {
         panel.add(confirmarButton, BorderLayout.EAST);
 
         panel.putClientProperty("oferta", oferta);
-        panel.putClientProperty("perfil", perfil);
+        //panel.putClientProperty("perfil", perfil);
         return panel;
     }
 

@@ -4,6 +4,7 @@
  */
 package tfids;
 
+import com.mysql.cj.jdbc.PreparedStatementWrapper;
 import com.sun.jdi.connect.spi.Connection;
 import java.io.FileNotFoundException;
 import java.sql.DriverManager;
@@ -17,11 +18,11 @@ import javax.swing.JFrame;
  * @author marco
  */
 public class DAO {
-    
+    //metodo para validar un usuario
     public boolean validarUsuario(String user, String password){
          
         try{
-            
+            //conexion a la base de datos y consulta
             java.sql.Connection con = conexionDB.getInstance().getConexion();
             String query = "SELECT * FROM usuario WHERE user=? and password=?";
             PreparedStatement sql = con.prepareStatement(query);
@@ -45,6 +46,7 @@ public class DAO {
 
                 // Verificamos que haya un registro en el resultado de la segunda consulta
                 if (resultado2.next()) {
+                    //de existir un gerente se crea una instancia del mismo y una instancia de usuario
                     String nombreGerente = resultado2.getString("nombreApellido");
                     Date fechaNacimiento = resultado2.getDate("fechaNacimiento");
                     String celular = Integer.toString(resultado2.getInt("celular"));
@@ -109,15 +111,15 @@ public class DAO {
         try{
             //System.out.println("llega");
             Gerente gerente = Gerente.getInstancia();
-            System.out.println("DNI del gerente: " + gerente.getDni());
-            System.out.println("Celular del gerente: " + gerente.getCelular());
+            //System.out.println("DNI del gerente: " + gerente.getDni());
+            //System.out.println("Celular del gerente: " + gerente.getCelular());
             /*if(gerente == null){
                 System.out.println("valor del gerente null");
             }else{
                 System.out.println("la instancia no es nula");
             }*/
             int dniGerente = gerente.getDni();
-            System.out.println("dni gerente metodo crearOferta " + dniGerente);
+            //System.out.println("dni gerente metodo crearOferta " + dniGerente);
             java.sql.Connection con = conexionDB.getInstance().getConexion();
             
             //String query = ();
@@ -127,9 +129,39 @@ public class DAO {
             sql.setInt(3, dniGerente);
             
             sql.executeUpdate();
-            System.out.println("llega aqui aaaaaaaaaassssss");
+            //System.out.println("llega aqui aaaaaaaaaassssss");
         } catch(Exception e){
             e.getMessage();
         }
     }
+    
+    public ArrayList getCandidatos(){
+        ArrayList<Candidato> datos = new ArrayList<>();
+        
+        try{
+            
+            java.sql.Connection con = conexionDB.getInstance().getConexion();
+            String query = ("SELECT * FROM candidato WHERE seleccionado=1");
+            PreparedStatement sql = con.prepareStatement(query);
+            ResultSet resultado = sql.executeQuery();
+            
+            while(resultado.next()){
+                int dni = resultado.getInt("dni_candidato");
+                String nombreApellido = resultado.getString("nombreApellido");
+                Date fechaNacimiento = resultado.getDate("fecha_nacimiento");
+                int celular = resultado.getInt("celular");
+                String email = resultado.getString("email");
+                boolean seleccionado = resultado.getBoolean("seleccionado");
+                
+                Candidato candidato = new Candidato(dni, nombreApellido, fechaNacimiento, celular, email, seleccionado);
+                datos.add(candidato);
+            }
+            
+        }catch(SQLException e){
+            e.getMessage();
+        }
+        
+        return datos;
+    }
+    
 }
