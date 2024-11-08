@@ -18,11 +18,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import tfids.Candidato;
 import tfids.DAO;
+import tfids.OfertaTrabajo;
 import tfids.Postulaciones;
 
 public class candidaturas extends JFrame {
-
+    DAO dao = new DAO();
     private JComboBox<String> filtroOfertaComboBox;
     private JPanel listaCandidatosPanel;
     private HashMap<String, String> cvs;
@@ -120,17 +122,27 @@ public class candidaturas extends JFrame {
         cvs.put("Rocio Aguero", "path/to/Rocio_Aguero_CV.pdf");
         cvs.put("Gonzalio Albarracín", "path/to/Gonzalo_Albarracin_CV.pdf");
         
-        DAO dao = new DAO();
+        
         ArrayList<Postulaciones> postulantes = dao.getPostulaciones();
-        System.out.println("Cantidad de postulastes" + postulantes.size());
+        ArrayList<Candidato> candidatos = dao.getCandidatos();
+        ArrayList<OfertaTrabajo> ofertas = dao.getOfertas();
+        //System.out.println("Cantidad de postulastes" + postulantes.size());
         
         //Iteracion para mostrar cada uno de los postulantes
         for(int i=0; i<postulantes.size();i++){
+            int dniPostulante = postulantes.get(i).getDni();
             //String nombreApellido = postulantes.get(i).getNombreApellido();
             //String puesto = postulantes.get(i).getPuesto();
             // llama al metodo crearCandidatos y los agrega al panel
-                listaCandidatosPanel.add(crearCandidatoPanel(postulantes.get(i).getNombreApellido(),
-                postulantes.get(i).getPuesto()));
+                for(int j=0; i<candidatos.size();j++){
+                    int dniCandidato = candidatos.get(j).getDni();
+                    if(dniPostulante == dniCandidato){
+                        //listaCandidatosPanel.add(crearCandidatoPanel(candidatos.get(j).getNombreApellido(),
+                        //postulantes.get(i).getPuesto()));
+                    }
+                }
+                
+                
             //listaCandidatosPanel.revalidate();
             //listaCandidatosPanel.repaint();
         }
@@ -180,6 +192,7 @@ public class candidaturas extends JFrame {
         confirmarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //dao.actualizarEstadoSeleccionado();
                 confirmarCandidato(nombre);
             }
         });

@@ -10,19 +10,31 @@ package tfids;
  */
 public class Postulaciones {
     
-    private String nombreApellido;
-    private String puesto;
+    private int dni;
+    //private String nombreApellido;
+    //private String puesto;
+    private int idOferta;
     
-    public Postulaciones(String nombreApellido, String puesto){
-        this.nombreApellido = nombreApellido;
-        this.puesto = puesto;
+    public Postulaciones(int dni, int idOferta){
+        //this.nombreApellido = nombreApellido;
+        this.dni = dni;
+        this.idOferta = idOferta;
+        //this.puesto = puesto;
     }
 
-    public String getNombreApellido() {
+    /*public String getNombreApellido() {
         return nombreApellido;
-    }
+    }*/
 
-    public String getPuesto() {
+    /*public String getPuesto() {
         return puesto;
+    }*/
+    
+    public int getDni() {
+        return dni;
+    }
+    
+    public int getIdOferta() {
+        return idOferta;
     }
 }

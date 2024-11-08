@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import ventanas.Oferta;
 
 /**
  *
@@ -80,16 +81,18 @@ public class DAO {
         
         try{
             java.sql.Connection con = conexionDB.getInstance().getConexion();
-            String query = ("SELECT nombreApellido, puesto FROM candidato, oferta_trabajo, postulaciones where "
+            String query = ("SELECT * FROM candidato, oferta_trabajo, postulaciones where "
                     + "dni_candidato = CANDIDATO_dni_candidato and OFERTA_TRABAJO_id_oferta = id_oferta");
             PreparedStatement sql = con.prepareStatement(query);
             ResultSet res = sql.executeQuery();
             
             while(res.next()){
-                String nombreApellido = res.getString("nombreApellido");
-                String puesto = res.getString("puesto");
+                //String nombreApellido = res.getString("nombreApellido");
+                //String puesto = res.getString("puesto");
+                int idOferta = res.getInt("OFERTA_TRABAJO_id_oferta");
+                int dni = res.getInt("CANDIDATO_dni_candidato");
                 
-                Postulaciones postulante = new Postulaciones(nombreApellido, puesto);
+                Postulaciones postulante = new Postulaciones(dni, idOferta);
                 datos.add(postulante);
             }
             
@@ -159,6 +162,46 @@ public class DAO {
             
         }catch(SQLException e){
             e.getMessage();
+        }
+        
+        return datos;
+    }
+    
+    public void actualizarEstadoSeleccionado(int dni){
+        try {
+            java.sql.Connection con = conexionDB.getInstance().getConexion();
+            String query = ("UPDATE candidato SET seleccionado = 1 WHERE dni_candidato=?");
+            PreparedStatement sql = con.prepareStatement(query);
+            sql.setInt(1, dni);
+            sql.executeUpdate();
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public ArrayList getOfertas(){
+        ArrayList<OfertaTrabajo> datos = new ArrayList<>();
+        
+        try {
+            java.sql.Connection con = conexionDB.getInstance().getConexion();
+            String query = ("SELECT * FROM oferta_trabajo");
+            PreparedStatement sql = con.prepareStatement(query);
+            ResultSet resultado = sql.executeQuery();
+            
+            while(resultado.next()){
+                int id = resultado.getInt("id_oferta");
+                String puesto = resultado.getString("puesto");
+                Date fechaPublicacion = resultado.getDate("fechaPublicacion");
+                String descripcion = resultado.getString("descripcion");
+                int dniGerente = resultado.getInt("GERENTE_dni");
+                
+                OfertaTrabajo oferta = new OfertaTrabajo(puesto, fechaPublicacion, descripcion, dniGerente);
+                datos.add(oferta);
+            }
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
         
         return datos;
