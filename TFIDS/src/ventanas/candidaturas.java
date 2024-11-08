@@ -137,6 +137,9 @@ public class candidaturas extends JFrame {
                 for(int j=0; i<candidatos.size();j++){
                     int dniCandidato = candidatos.get(j).getDni();
                     if(dniPostulante == dniCandidato){
+                        
+                        // HACER QUE SE VISUALICEN LOS CANDIDATOS 
+                        
                         //listaCandidatosPanel.add(crearCandidatoPanel(candidatos.get(j).getNombreApellido(),
                         //postulantes.get(i).getPuesto()));
                     }
