@@ -88,6 +88,28 @@ public class login extends JFrame {
         gbc.gridy = 4;
         gbc.gridwidth = 2;
         loginPanel.add(loginButton, gbc);
+        
+        // Botón de Crear Usuario
+        JButton createUserButton = new JButton("Crear Usuario");
+        createUserButton.setBackground(new Color(34, 139, 34));  // Color base
+        createUserButton.setForeground(Color.WHITE);
+
+        // Agregar efecto de hover
+        createUserButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                createUserButton.setBackground(new Color(34, 139, 34)); // Verde similar al de "Iniciar sesión"
+                createUserButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));  // Borde blanco
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                createUserButton.setBackground(new Color(34, 139, 34)); // Vuelve al color original
+                createUserButton.setBorder(BorderFactory.createEmptyBorder());  // Quita el borde al salir
+            }
+        });
+        
+        // Configuración de layout y posición del botón
+         gbc.gridy = 6;  // Ubícalo en una fila diferente
+         loginPanel.add(createUserButton, gbc);
 
         // Mensaje de error (invisible al inicio)
         JLabel errorLabel = new JLabel("Usuario o contraseña incorrectos");
@@ -126,7 +148,10 @@ public class login extends JFrame {
                 Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        
+        // Acción al presionar el botón de crear usuario
+        createUserButton.addActionListener(e -> {
+            new CrearUsuario(); // Abre la ventana de creación de usuario
+        });
     }
 
     public static void main(String[] args) {
