@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.border.EmptyBorder;
@@ -49,9 +50,9 @@ public class Entrevistas extends JFrame {
         contentPanel.setBackground(Color.WHITE);
         contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 
-        // Candidato 1
-        //JPanel candidate1Panel = crearPanelCandidato("Jasmin Berdu", "Ingeniería Mecánica");
-        //contentPanel.add(candidate1Panel);
+        //Candidato 1
+        JPanel candidate1Panel = crearPanelCandidato("Jasmin Berdu",123);
+        contentPanel.add(candidate1Panel);
 
         // Candidato 2
         //JPanel candidate2Panel = crearPanelCandidato("Marcos Brandan", "Ingeniería en Sistemas");
@@ -64,7 +65,9 @@ public class Entrevistas extends JFrame {
         ArrayList<Candidato> candidatos = new ArrayList<>();
         candidatos = dao.getCandidatos();
         for(int i=0; i<candidatos.size();i++){
-            crearPanelCandidato(candidatos.get(i).getNombreApellido());
+            if(candidatos.get(i) != null && candidatos.get(i).isSeleccionado()){
+                crearPanelCandidato(candidatos.get(i).getNombreApellido(), candidatos.get(i).getDni());
+            }
         }
 
         mainPanel.add(contentPanel, BorderLayout.CENTER);
@@ -97,7 +100,7 @@ public class Entrevistas extends JFrame {
         add(mainPanel);
     }    
 
-    private JPanel crearPanelCandidato(String nombre/*, String perfil*/) {
+    private JPanel crearPanelCandidato(String nombre, int dni) {
         JPanel candidatePanel = new JPanel();
         candidatePanel.setLayout(new BorderLayout());
         candidatePanel.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
@@ -160,6 +163,9 @@ public class Entrevistas extends JFrame {
         scheduleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                
+                DAO dao = new DAO();
+                
                 Date selectedDate = (Date) dateSpinner.getValue();
                 Date selectedTime = (Date) timeSpinner.getValue();
                 

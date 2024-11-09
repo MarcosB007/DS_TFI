@@ -119,21 +119,38 @@ public class candidaturas extends JFrame {
 
         for(int i=0; i<postulantes.size();i++){
             String nombreApellido = "";
-            Candidato candidato = new Candidato();
+            Candidato candidato = null;
             String puesto = "";
             for(int j=0; j<candidatos.size();j++){
                 if(postulantes.get(i).getDni() == candidatos.get(j).getDni()){ 
                     nombreApellido = candidatos.get(j).getNombreApellido();
                     candidato = candidatos.get(j);
+                    break;
                 }  
             }
-            for(int k=0; k < ofertas.size(); k++){
-                if(postulantes.get(i).getIdOferta() == ofertas.get(k).getIdOferta()){
+            if (candidato != null && !candidato.isSeleccionado()) {
+            // Busca la oferta correspondiente al ID de la postulación
+            for (int k = 0; k < ofertas.size(); k++) {
+                if (postulantes.get(i).getIdOferta() == ofertas.get(k).getIdOferta()) {
                     puesto = ofertas.get(k).getPuesto();
+                    break; // Sale del bucle una vez que encuentra la oferta
                 }
             }
             
-            listaCandidatosPanel.add(crearCandidatoPanel(candidato,puesto));
+            listaCandidatosPanel.add(crearCandidatoPanel(candidato, puesto));
+        }
+            
+            /*for(int k=0; k < ofertas.size(); k++){
+                if(postulantes.get(i).getIdOferta() == ofertas.get(k).getIdOferta()){
+                    puesto = ofertas.get(k).getPuesto();
+                    break;
+                }
+            }
+            
+            if(candidato.isSeleccionado() == false){
+                listaCandidatosPanel.add(crearCandidatoPanel(candidato,puesto));
+            }*/
+            //listaCandidatosPanel.add(crearCandidatoPanel(candidato,puesto));
         }
 
         listaCandidatosPanel.revalidate();

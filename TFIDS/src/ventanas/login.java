@@ -110,7 +110,7 @@ public class login extends JFrame {
             DAO dao = new DAO();
             
             try {      
-                var resultado = dao.validarUsuario(username, password);
+                boolean resultado = dao.validarUsuario(username, password);
                 System.out.println(resultado);
                 // Verificar credenciales (ajusta según tu lógica de autenticación)
                 if (resultado) {

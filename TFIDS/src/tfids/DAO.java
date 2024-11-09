@@ -10,6 +10,8 @@ import java.io.FileNotFoundException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import ventanas.Oferta;
@@ -66,6 +68,9 @@ public class DAO {
                 } else {
                     System.out.println("No se encontró gerente con el DNI especificado");
                 }   
+            }
+            else{
+                return false;
             }
             return true;
             
@@ -205,6 +210,23 @@ public class DAO {
         }
         
         return datos;
+    }
+    
+    public void crearEntrevista(LocalDate fechaProgramada, LocalTime horaProgramada, String resultado, int dniGerente, int dniCandidato){
+        try {
+            java.sql.Connection con = conexionDB.getInstance().getConexion();
+            String query = ("INSERT INTO entrevista(fecha_programada, resultado, GERENTE_dni, CANDIDATO_dni_candidato) VALUES (?,?,?,?)");
+            PreparedStatement sql = con.prepareStatement(query);
+            sql.setDate(1, Date.valueOf(fechaProgramada));
+            sql.setTime(2, Time.valueOf(horaProgramada));
+            sql.setString(3, resultado);
+            sql.setInt(4, dniGerente);
+            sql.setInt(5, dniCandidato);
+            
+            sql.executeUpdate();
+        } catch (Exception e) {
+            e.getMessage();
+        }
     }
     
 }
