@@ -212,14 +212,15 @@ public class DAO {
         return datos;
     }
     
-    public void crearEntrevista(LocalDate fechaProgramada, LocalTime horaProgramada, String resultado, int dniGerente, int dniCandidato){
+    public void crearEntrevista(LocalDate fechaProgramada, LocalTime horaProgramada, Entrevista.EstadoEntrevista resultado, int dniGerente, int dniCandidato){
         try {
             java.sql.Connection con = conexionDB.getInstance().getConexion();
             String query = ("INSERT INTO entrevista(fecha_programada, horaProgramada, resultado, GERENTE_dni, CANDIDATO_dni_candidato) VALUES (?,?,?,?,?)");
             PreparedStatement sql = con.prepareStatement(query);
+            
             sql.setDate(1, Date.valueOf(fechaProgramada));
             sql.setTime(2, Time.valueOf(horaProgramada));
-            sql.setString(3, resultado);
+            sql.setString(3, resultado.name());
             sql.setInt(4, dniGerente);
             sql.setInt(5, dniCandidato);
             
@@ -227,6 +228,45 @@ public class DAO {
         } catch (Exception e) {
             e.getMessage();
         }
+    }
+    
+    public ArrayList getEntrevistas(){
+        ArrayList<Entrevista> datos = new ArrayList<>();
+        
+        try {
+            java.sql.Connection con = conexionDB.getInstance().getConexion();
+            String query = ("SELECT * FROM entrevista");
+            PreparedStatement sql = con.prepareStatement(query);
+            ResultSet resultado = sql.executeQuery();
+            
+            while(resultado.next()){
+                
+                int id = resultado.getInt("id_entrevista");
+                //OBTENEMOS EL VALOR DEL ESTADO EN STRING Y LUEGO LO CONVERTIMOS A ENUM
+                String estado = resultado.getString("resultado");
+                Entrevista.EstadoEntrevista estadoConvertido = Entrevista.EstadoEntrevista.valueOf(estado);
+                
+                int dniGerente = resultado.getInt("GERENTE_dni");
+                int dniCandidato = resultado.getInt("CANDIDATO_dni_candidato");
+                
+                //OBTENEMOS LA FECHA Y HORA EN FORMADO DATE Y LUEGO LA CONVERTIMOS A LocalDate y LocalTime
+                Date fechaProgramada = resultado.getDate("fecha_programada");
+                Time horaProgramada = resultado.getTime("horaProgramada");
+            
+                // Convertir `Date` y `Time` a `LocalDate` y `LocalTime`
+                LocalDate fechaLocal = fechaProgramada.toLocalDate();
+                LocalTime horaLocal = horaProgramada.toLocalTime();
+                
+                Entrevista entrevista = new Entrevista(dniGerente, fechaLocal, horaLocal, estadoConvertido, dniGerente, dniCandidato);
+                
+                datos.add(entrevista);
+            }
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return datos;
     }
     
 }

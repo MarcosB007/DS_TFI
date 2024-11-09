@@ -21,6 +21,7 @@ import java.util.Date;
 import javax.swing.border.EmptyBorder;
 import tfids.Candidato;
 import tfids.DAO;
+import tfids.Entrevista;
 import tfids.Gerente;
 
 public class Entrevistas extends JFrame {
@@ -68,14 +69,33 @@ public class Entrevistas extends JFrame {
         
         DAO dao = new DAO();
         ArrayList<Candidato> candidatos = new ArrayList<>();
+        ArrayList<Entrevista> entrevista = new ArrayList<>();
         candidatos = dao.getCandidatos();
+        entrevista = dao.getEntrevistas();
+        System.out.println("cantidad entrevistas :" + entrevista.size());
         for(int i=0; i<candidatos.size();i++){
-            System.out.println("tamanio candidatos" + candidatos.size());
-            if(candidatos.get(i).isSeleccionado() == true){
-                System.out.println("cumple la condicion el candidato" + candidatos.get(i).getNombreApellido());
-                JPanel panelCandidato = crearPanelCandidato(candidatos.get(i).getNombreApellido(), candidatos.get(i).getDni());
-                contentPanel.add(panelCandidato);
+            
+            if (candidatos.get(i).isSeleccionado()) {
+                // Usar una bandera para verificar si tiene entrevista programada
+                boolean tieneEntrevista = false;
+
+                // Verificar en el listado de entrevistas si ya tiene una programada
+                for (int j=0; j<entrevista.size();j++) {
+                    if (entrevista.get(j).getDniCandidato() == candidatos.get(i).getDni()) {
+                        tieneEntrevista = true;
+                        System.out.println("Candidato ya tiene entrevista programada");
+                        break; // Salir del bucle si ya se encontró una entrevista para el candidato
+                    }
+                }
+
+                // Si no tiene entrevista, crear el panel para el candidato
+                if (!tieneEntrevista) {
+                    JPanel panelCandidato = crearPanelCandidato(candidatos.get(i).getNombreApellido(), candidatos.get(i).getDni());
+                    contentPanel.add(panelCandidato);
+                }
             }
+            
+            
         }
 
         mainPanel.add(contentPanel, BorderLayout.CENTER);
@@ -185,7 +205,7 @@ public class Entrevistas extends JFrame {
                                       .atZone(ZoneId.systemDefault())
                                       .toLocalTime();
 
-                dao.crearEntrevista(selectedDate, selectedTime, "0", gerente.getDni(), dni);
+                dao.crearEntrevista(selectedDate, selectedTime, Entrevista.EstadoEntrevista.ENTREVISTA_PROGRAMADA, gerente.getDni(), dni);
 
                 // Formatear la fecha y la hora para el mensaje de confirmación
                 DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

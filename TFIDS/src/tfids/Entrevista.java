@@ -14,20 +14,29 @@ import java.util.Date;
  */
 public class Entrevista {
     
+    public enum EstadoEntrevista {
+        ENTREVISTA_PROGRAMADA,
+        ACEPTADO,
+        RECHAZADO,
+        EN_ESPERA
+    }
+    
     private int idEntrevista;
     private LocalDate fechaProgramada;
     private LocalTime horaProgramada;
-    private String resultado;
+    //private String resultado;
     private int dniGerente;
     private int dniCandidato;
+    private EstadoEntrevista resultado;
     
-    public Entrevista(int idEntrevista, LocalDate fechaProgramada, LocalTime horaProgramada, String resutado, int dniGerente, int dniCandidato){
+    public Entrevista(int idEntrevista, LocalDate fechaProgramada, LocalTime horaProgramada, EstadoEntrevista estado, int dniGerente, int dniCandidato){
         this.idEntrevista = idEntrevista;
         this.fechaProgramada = fechaProgramada;
         this.horaProgramada = horaProgramada;
-        this.resultado = resutado;
+        //this.resultado = resutado;
         this.dniGerente = dniGerente;
         this.dniCandidato = dniCandidato;
+        this.resultado = resultado;
     }
 
     public int getIdEntrevista() {
@@ -42,9 +51,9 @@ public class Entrevista {
         return horaProgramada;
     }
 
-    public String getResultado() {
+    /*public String getResultado() {
         return resultado;
-    }
+    }*/
 
     public int getDniGerente() {
         return dniGerente;
@@ -54,4 +63,12 @@ public class Entrevista {
         return dniCandidato;
     }
     
+    public EstadoEntrevista getEstado() {
+        return resultado;
+    }
+
+    public void setEstado(EstadoEntrevista estado) {
+        this.resultado = resultado;
+    }
+
 }
