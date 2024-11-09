@@ -149,7 +149,7 @@ public class DAO {
         try{
             
             java.sql.Connection con = conexionDB.getInstance().getConexion();
-            String query = ("SELECT * FROM candidato WHERE seleccionado=0");
+            String query = ("SELECT * FROM candidato");
             PreparedStatement sql = con.prepareStatement(query);
             ResultSet resultado = sql.executeQuery();
             
@@ -215,7 +215,7 @@ public class DAO {
     public void crearEntrevista(LocalDate fechaProgramada, LocalTime horaProgramada, String resultado, int dniGerente, int dniCandidato){
         try {
             java.sql.Connection con = conexionDB.getInstance().getConexion();
-            String query = ("INSERT INTO entrevista(fecha_programada, resultado, GERENTE_dni, CANDIDATO_dni_candidato) VALUES (?,?,?,?)");
+            String query = ("INSERT INTO entrevista(fecha_programada, horaProgramada, resultado, GERENTE_dni, CANDIDATO_dni_candidato) VALUES (?,?,?,?,?)");
             PreparedStatement sql = con.prepareStatement(query);
             sql.setDate(1, Date.valueOf(fechaProgramada));
             sql.setTime(2, Time.valueOf(horaProgramada));

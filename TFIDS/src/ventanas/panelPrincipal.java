@@ -146,8 +146,6 @@ public class panelPrincipal extends JFrame {
         // Hacer visible la ventana
         //setVisible(true);
     }
-
-
-    
+ 
  }
 

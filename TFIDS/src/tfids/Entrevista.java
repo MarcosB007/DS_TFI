@@ -18,10 +18,10 @@ public class Entrevista {
     private LocalDate fechaProgramada;
     private LocalTime horaProgramada;
     private String resultado;
-    private Gerente dniGerente;
-    private Candidato dniCandidato;
+    private int dniGerente;
+    private int dniCandidato;
     
-    public Entrevista(int idEntrevista, LocalDate fechaProgramada, LocalTime horaProgramada, String resutado, Gerente dniGerente, Candidato dniCandidato){
+    public Entrevista(int idEntrevista, LocalDate fechaProgramada, LocalTime horaProgramada, String resutado, int dniGerente, int dniCandidato){
         this.idEntrevista = idEntrevista;
         this.fechaProgramada = fechaProgramada;
         this.horaProgramada = horaProgramada;
@@ -46,11 +46,11 @@ public class Entrevista {
         return resultado;
     }
 
-    public Gerente getDniGerente() {
+    public int getDniGerente() {
         return dniGerente;
     }
 
-    public Candidato getDniCandidato() {
+    public int getDniCandidato() {
         return dniCandidato;
     }
     

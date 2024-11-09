@@ -12,12 +12,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.border.EmptyBorder;
 import tfids.Candidato;
 import tfids.DAO;
+import tfids.Gerente;
 
 public class Entrevistas extends JFrame {
 
@@ -51,8 +55,8 @@ public class Entrevistas extends JFrame {
         contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 
         //Candidato 1
-        JPanel candidate1Panel = crearPanelCandidato("Jasmin Berdu",123);
-        contentPanel.add(candidate1Panel);
+        //JPanel candidate1Panel = crearPanelCandidato("Jasmin Berdu",123);
+        //contentPanel.add(candidate1Panel);
 
         // Candidato 2
         //JPanel candidate2Panel = crearPanelCandidato("Marcos Brandan", "Ingeniería en Sistemas");
@@ -61,12 +65,16 @@ public class Entrevistas extends JFrame {
         //JPanel candidate3Panel = crearPanelCandidato("Gonzalo Albarracin", "Ingenieria Civil");
         //contentPanel.add(candidate3Panel);
         
+        
         DAO dao = new DAO();
         ArrayList<Candidato> candidatos = new ArrayList<>();
         candidatos = dao.getCandidatos();
         for(int i=0; i<candidatos.size();i++){
-            if(candidatos.get(i) != null && candidatos.get(i).isSeleccionado()){
-                crearPanelCandidato(candidatos.get(i).getNombreApellido(), candidatos.get(i).getDni());
+            System.out.println("tamanio candidatos" + candidatos.size());
+            if(candidatos.get(i).isSeleccionado() == true){
+                System.out.println("cumple la condicion el candidato" + candidatos.get(i).getNombreApellido());
+                JPanel panelCandidato = crearPanelCandidato(candidatos.get(i).getNombreApellido(), candidatos.get(i).getDni());
+                contentPanel.add(panelCandidato);
             }
         }
 
@@ -163,17 +171,31 @@ public class Entrevistas extends JFrame {
         scheduleButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+
                 DAO dao = new DAO();
+                Gerente gerente = Gerente.getInstancia();
+
+                Date dateValue  = (Date) dateSpinner.getValue();
+                Date timeValue  = (Date) timeSpinner.getValue();
                 
-                Date selectedDate = (Date) dateSpinner.getValue();
-                Date selectedTime = (Date) timeSpinner.getValue();
-                
+                LocalDate selectedDate = dateValue.toInstant()
+                                      .atZone(ZoneId.systemDefault())
+                                      .toLocalDate();
+                LocalTime selectedTime = timeValue.toInstant()
+                                      .atZone(ZoneId.systemDefault())
+                                      .toLocalTime();
+
+                dao.crearEntrevista(selectedDate, selectedTime, "0", gerente.getDni(), dni);
+
+                // Formatear la fecha y la hora para el mensaje de confirmación
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
                 // Mensaje de confirmación
                 JOptionPane.showMessageDialog(null, 
                     "Entrevista programada para " + nombre + 
-                    " el " + new java.text.SimpleDateFormat("dd/MM/yyyy").format(selectedDate) +
-                    " a las " + new java.text.SimpleDateFormat("HH:mm").format(selectedTime),
+                    " el " + selectedDate.format(dateFormatter) +
+                    " a las " + selectedTime.format(timeFormatter),
                     "Confirmación",
                     JOptionPane.INFORMATION_MESSAGE);
             }
